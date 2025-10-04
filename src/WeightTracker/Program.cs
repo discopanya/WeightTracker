@@ -1,10 +1,16 @@
 using Core;
+using Microsoft.Extensions.Options;
 using System;
 using System.Runtime;
 using WeightTracker.Components;
 using WeightTracker.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.Configure<DatabaseSettings>(
+    builder.Configuration.GetSection(nameof(DatabaseSettings))
+);
+builder.Services.AddScoped<WeightTrackerContext>();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
@@ -13,6 +19,23 @@ builder.Services.AddRazorComponents()
 builder.Services.AddScoped<LoginService>();
 builder.Services.AddScoped<DatabaseService>();
 var app = builder.Build();
+
+///////////////////////
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<WeightTrackerContext>();
+
+    try
+    {
+        bool canConnect = db.Database.CanConnect();
+        Console.WriteLine($"DB connection status: {canConnect}");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"DB connection error: {ex.Message}");
+    }
+}
+////////////////////
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
