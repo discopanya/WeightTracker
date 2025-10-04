@@ -1,4 +1,8 @@
+using Core;
+using System;
+using System.Runtime;
 using WeightTracker.Components;
+using WeightTracker.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,6 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+builder.Services.AddScoped<LoginService>();
+builder.Services.AddScoped<DatabaseService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
