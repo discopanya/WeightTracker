@@ -132,3 +132,5 @@ $RECYCLE.BIN/
 .DS_Store
 
 _NCrunch*
+/.vs/WeightTracker/v17/DocumentLayout.backup.json
+/.vs/WeightTracker/v17/DocumentLayout.json
