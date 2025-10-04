@@ -22,5 +22,6 @@ namespace WeightTracker.Infrastructure
                 optionsBuilder.UseSqlServer(_connectionString);
             }
         }
+        public DbSet<Users> Users { get; set; }
     }
 }

@@ -9,9 +9,9 @@ namespace WeightTracker.Infrastructure
     public class DatabaseService
     {
         // Implementation of the DatabaseService class
-        public User GetUser(string login) 
+        public Users GetUser(string login) 
         {
-            return new User
+            return new Users
             {
                 Login = login,
                 Password = "abc",
