@@ -1,4 +1,5 @@
 using Core;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System;
 using System.Runtime;
@@ -20,11 +21,9 @@ builder.Services.AddScoped<LoginService>();
 builder.Services.AddScoped<DatabaseService>();
 var app = builder.Build();
 
-///////////////////////
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<WeightTrackerContext>();
-
     try
     {
         bool canConnect = db.Database.CanConnect();
@@ -34,8 +33,8 @@ using (var scope = app.Services.CreateScope())
     {
         Console.WriteLine($"DB connection error: {ex.Message}");
     }
+    db.Database.Migrate();
 }
-////////////////////
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
