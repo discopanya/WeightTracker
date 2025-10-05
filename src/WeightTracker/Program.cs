@@ -18,7 +18,9 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 builder.Services.AddScoped<LoginService>();
+builder.Services.AddScoped<RegisterService>();
 builder.Services.AddScoped<DatabaseService>();
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())

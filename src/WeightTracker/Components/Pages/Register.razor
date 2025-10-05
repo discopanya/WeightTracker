@@ -1,12 +1,13 @@
 ﻿@page "/register"
 @rendermode InteractiveServer
 @using Infrastructure
+@using Core
 
 <PageTitle>Register</PageTitle>
 
 <h1>Register</h1>
 
-<EditForm Model="@Users" OnValidSubmit="RegisterNewUser">
+<EditForm Model="@Users" OnValidSubmit="RegisterNew">
     <div class="form-group" style="margin-top: 20px;">
         <label>Login:</label>
         <InputText @bind-Value="Users.Login" class="form-control" style="width: 300px;" />
@@ -25,13 +26,23 @@
     <button class="btn btn-primary" style="margin-top: 20px;">Register</button>
 </EditForm>
 
-@code {
+@if (!string.IsNullOrEmpty(ErrorMessage))
+{
+    <p style="
+        color:@(ErrorMessage.Contains("success") ? "green" : "red");
+        margin-top:20px;">
+        @ErrorMessage
+    </p>
+}
 
-    [Inject] WeightTrackerContext weightTrackerContext { get; set; }
+@code {
+    private string? ErrorMessage;
+    [Inject] private RegisterService? RegisterService { get; set; }
+
     private Users Users = new();
 
-    private void RegisterNewUser()
+    private void RegisterNew()
     {
-        Users.Register(weightTrackerContext);
+        ErrorMessage = RegisterService.RegisterUser(Users);
     }
 }

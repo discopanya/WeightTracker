@@ -11,8 +11,8 @@ using WeightTracker.Infrastructure;
 namespace WeightTracker.Infrastructure.Migrations
 {
     [DbContext(typeof(WeightTrackerContext))]
-    [Migration("20251004173348_CreateUsers")]
-    partial class CreateUsers
+    [Migration("20251005193348_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,8 +26,11 @@ namespace WeightTracker.Infrastructure.Migrations
 
             modelBuilder.Entity("WeightTracker.Infrastructure.Users", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Email")
                         .IsRequired()
