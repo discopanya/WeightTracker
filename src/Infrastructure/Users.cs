@@ -15,5 +15,11 @@ namespace WeightTracker.Infrastructure
         public string Login { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
+
+        public void Register(WeightTrackerContext context)
+        {
+            context.Users.Add(this);
+            context.SaveChanges();
+        }
     }
 }
